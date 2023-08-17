@@ -4,7 +4,7 @@
 ArithmeticAssociativityOperatorPrecedenceManipulator is a JavaScript-based calculator that demonstrates the manipulation of operator precedence and associativity rules in arithmetic expressions. This interactive web application allows users to input expressions and experiment with different precedence and associativity cases, observing step-by-step evaluation.
 
 ## Screenshots
-![Demo Screenshot](demo.png)
+![Demo Screenshot](Demo.png)
 
 ## Usage
 1. Enter an arithmetic expression in the input field.

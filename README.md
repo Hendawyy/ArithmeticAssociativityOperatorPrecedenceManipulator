@@ -13,7 +13,7 @@ ArithmeticAssociativityOperatorPrecedenceManipulator is a JavaScript-based calcu
 4. The result and evaluation steps will be displayed below the input fields.
 
 ## Code
-The main code for this project is provided in the HTML file [index.html](index.html).
+The main code for this project is provided in the HTML file [index.html](Theory.html).
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

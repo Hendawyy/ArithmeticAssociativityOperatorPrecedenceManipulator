@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Operator Precedence</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      padding: 20px;
+      background-color: #f6f8fa;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    select {
+      width: 380px;
+      font-size: 16px;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    button {
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #steps {
+      margin-top: 20px;
+    }
+
+    #steps p {
+      margin: 5px 0;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+ <script>
+function calculate() {
+  const expression = document.getElementById("expression").value;
+  const caseValue = parseInt(document.getElementById("case").value);
+  const direction = document.getElementById("direction").value;
+
+  const precedence = {
+    1: { '+': 1, '-': 1, '*': 0, '/': 0 },
+    2: { '+': 0, '-': 0, '*': 1, '/': 1 },
+    3: { '+': 1, '-': 1, '*': 1, '/': 1 }
+  };
+
+  const operators = [];
+  const operands = [];
+  const steps = [];
+
+  let num = '';
+  let i = 0;
+  while (i < expression.length) {
+    if (!isNaN(expression[i])) {
+      num += expression[i];
+      if (i === expression.length - 1 || isNaN(expression[i + 1])) {
+        operands.push(parseInt(num));
+        num = '';
+      }
+    } else if (['+', '-', '*', '/'].includes(expression[i])) {
+      while (
+        operators.length > 0 &&
+        (precedence[caseValue][expression[i]] < precedence[caseValue][operators[operators.length - 1]] ||
+          (precedence[caseValue][expression[i]] === precedence[caseValue][operators[operators.length - 1]] && direction === '1'))
+      ) {
+        const operator = operators.pop();
+        const rightOperand = operands.pop();
+        const leftOperand = operands.pop();
+        const result = eval(`${leftOperand} ${operator} ${rightOperand}`);
+        operands.push(result);
+        steps.push(`${leftOperand} ${operator} ${rightOperand} = ${result}`);
+      }
+      operators.push(expression[i]);
+    }
+    i++;
+  }
+
+  while (operators.length > 0) {
+    const operator = operators.pop();
+    const rightOperand = operands.pop();
+    const leftOperand = operands.pop();
+    const result = eval(`${leftOperand} ${operator} ${rightOperand}`);
+    operands.push(result);
+    steps.push(`${leftOperand} ${operator} ${rightOperand} = ${result}`);
+  }
+
+  const result = operands[0];
+
+  document.getElementById("steps").innerHTML = steps.map(step => `<p>${step}</p>`).join('');
+  document.getElementById("result").textContent = `Result: ${result}`;
+}
+
+
+ </script>
+</head>
+<body>
+  <br> <br> <br>
+  <h1>Manipulating The Precedence And Associativity Rules Using JavaScript</h1>
+  <br> <br>
+  <label for="expression">Arithmetic Expression:</label>
+  <br>
+  <input type="text" id="expression" placeholder="Enter the arithmetic expression">
+  <br><br>
+  <label for="case">Associativity:</label>
+  <br>
+  <select id="case">
+    <option value="1"> + and - Have Higher Precedence Than * and /</option>
+    <option value="2"> + and - Have Lower Precedence Than * and /</option>
+    <option value="3"> + and - Have Same Precedence as * and /</option>
+  </select>
+  <br><br>
+  <label for="direction">Direction:</label>
+  <br>
+  <select id="direction">
+    <option value="1">Left to Right</option>
+    <option value="2">Right to Left</option>
+  </select>
+  <br><br>
+  <button onclick="calculate()">Calculate</button>
+  <br><br>
+  <div id="steps"></div>
+  <br><br>
+  <p id="result"></p>
+</body>
+</html>
+
